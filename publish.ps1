@@ -31,7 +31,9 @@ Set-Content -Path (Join-Path $providers "放置说明.txt") -Encoding UTF8 -Valu
   达梦 DM     : DmProvider.dll
   金仓 Kingbase: Kdbndp.dll
 其余 MySQL / PostgreSQL / Oracle / SQL Server / SQLite 驱动已随包提供。
+厂商驱动受各自授权限制，不要上传到公开仓库；详细说明见 README.md。
 "@
+Copy-Item (Join-Path $root "providers\README.md") $providers -ErrorAction SilentlyContinue
 
 $samples = Join-Path $dist "samples"
 if (-not (Test-Path $samples)) { New-Item -ItemType Directory $samples | Out-Null }

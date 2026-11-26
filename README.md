@@ -32,7 +32,7 @@
 驱动处理方式：
 
 - MySQL / PostgreSQL / Oracle / SQL Server / SQLite 的驱动已随程序打包，Windows 10/11 自带 .NET Framework 4.8；Windows 7 SP1 需要先安装 4.8 运行时。
-- 达梦、金仓等厂商驱动不随包分发（授权原因），把 `DmProvider.dll` / `Kdbndp.dll` 及其依赖放到 **程序目录** 或 **程序目录下的 `providers` 子目录**，工具会自动找到；也可以在配置里显式指定 `providerAssembly` / `providerType`。
+- 达梦、金仓等厂商驱动不随包分发（授权原因），把 `DmProvider.dll` / `Kdbndp.dll` 及其依赖放到 **程序目录** 或 **程序目录下的 `providers` 子目录**，工具会自动找到；也可以在配置里显式指定 `providerAssembly` / `providerType`。具体文件清单和获取方式见 [providers/README.md](providers/README.md)。
 
 先用这条命令确认驱动状态：
 
@@ -53,6 +53,7 @@ DBConvertDB
 │  ├─ DbConvert.Cli         # 命令行
 │  └─ DbConvert.Gui         # WPF 界面
 ├─ samples                  # 示例配置和造数脚本（真实库文件不入库）
+├─ providers                # 厂商驱动目录说明（DLL 不入库）
 ├─ assets                   # 应用图标
 ├─ docs                     # 文档与界面截图
 ├─ .github/workflows        # GitHub Actions 编译检查

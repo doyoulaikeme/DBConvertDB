@@ -29,7 +29,8 @@ ui-*.png
 *.sqlite3
 
 # Vendor/proprietary drivers — do not redistribute
-providers/
+providers/*
+!providers/README.md
 DmProvider*.dll
 Kdbndp*.dll
 
