@@ -73,7 +73,7 @@ DBConvertDB
 git clone https://github.com/doyoulaikeme/DBConvertDB.git
 cd DBConvertDB
 
-# 0) 先编译（建议 .NET SDK 8.0；5.0 以上也可构建）
+# 0) 先编译（需要 .NET SDK 8.0 或更高）
 dotnet build DBConvertDB.sln -c Debug
 
 # 1) 生成配置模板
