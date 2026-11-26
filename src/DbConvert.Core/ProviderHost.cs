@@ -12,7 +12,8 @@ namespace DbConvert
     public static class ProviderHost
     {
         private static readonly object SyncRoot = new object();
-        private static readonly HashSet<string> Registered = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        private static readonly Dictionary<string, DbProviderFactory> Registered =
+            new Dictionary<string, DbProviderFactory>(StringComparer.OrdinalIgnoreCase);
         private static readonly List<string> ProbeDirs = new List<string>();
 
         static ProviderHost()
@@ -46,6 +47,22 @@ namespace DbConvert
             }
         }
 
+        /// <summary>
+        /// 注册内置驱动工厂。net48 的 DbProviderFactories 没有 RegisterFactory，
+        /// 这里由 ProviderHost 自己缓存工厂，避免依赖该 API。
+        /// </summary>
+        public static void RegisterFactory(string invariant, DbProviderFactory factory)
+        {
+            if (string.IsNullOrWhiteSpace(invariant) || factory == null) return;
+            lock (SyncRoot) { Registered[invariant] = factory; }
+        }
+
+        public static bool IsFactoryRegistered(string invariant)
+        {
+            if (string.IsNullOrWhiteSpace(invariant)) return false;
+            lock (SyncRoot) { return Registered.ContainsKey(invariant); }
+        }
+
         public static string DefaultInvariant(string kind)
         {
             string key = Dialects.NormalizeKind(kind);
@@ -69,6 +86,12 @@ namespace DbConvert
             if (!string.IsNullOrWhiteSpace(ep.ProviderAssembly))
             {
                 return EnsureExternalFactory(ep.ProviderAssembly, ep.ProviderType, invariant);
+            }
+
+            lock (SyncRoot)
+            {
+                DbProviderFactory cached;
+                if (Registered.TryGetValue(invariant, out cached)) return cached;
             }
 
             try
@@ -159,10 +182,8 @@ namespace DbConvert
 
             lock (SyncRoot)
             {
-                if (Registered.Contains(invariant))
-                {
-                    try { return DbProviderFactories.GetFactory(invariant); } catch { Registered.Remove(invariant); }
-                }
+                DbProviderFactory cached;
+                if (Registered.TryGetValue(invariant, out cached)) return cached;
 
                 Assembly asm = Assembly.LoadFrom(full);
                 Type type = null;
@@ -200,8 +221,7 @@ namespace DbConvert
                 DbProviderFactory factory = instance as DbProviderFactory;
                 if (factory == null) throw new InvalidOperationException(type.FullName + " 不是 DbProviderFactory");
 
-                try { DbProviderFactories.RegisterFactory(invariant, factory); } catch { }
-                Registered.Add(invariant);
+                Registered[invariant] = factory;
                 return factory;
             }
         }

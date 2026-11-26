@@ -136,8 +136,12 @@ internal static class Program
             string note = "";
             try
             {
-                DbProviderFactory f = DbProviderFactories.GetFactory(invariant);
-                ok = f != null;
+                ok = ProviderHost.IsFactoryRegistered(invariant);
+                if (!ok)
+                {
+                    DbProviderFactory f = DbProviderFactories.GetFactory(invariant);
+                    ok = f != null;
+                }
             }
             catch
             {

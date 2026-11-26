@@ -1,7 +1,7 @@
 # DBConvertDB — 数据库结构与数据迁移工具
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![.NET](https://img.shields.io/badge/.NET-5.0-512BD4)](https://dotnet.microsoft.com/)
+[![.NET Framework](https://img.shields.io/badge/.NET%20Framework-4.8-512BD4)](https://dotnet.microsoft.com/download/dotnet-framework/net48)
 
 一个自带引擎的数据库迁库工具：在 MySQL、PostgreSQL、Oracle、SQL Server、SQLite、达梦 DM、金仓 KingbaseES、openGauss、OceanBase、TiDB、GBase 8a、瀚高等任意两种库之间迁移，源库和目标库都可以是其中任意一种，不限国产库。
 
@@ -11,6 +11,8 @@
 - `DbConvert.Gui.exe`：WPF 图形界面，勾选表、点按钮就能迁，适合现场实施。
 
 核心能力：读源库结构 → 生成目标库建表/索引/注释/默认值/生成列/CHECK/外键/视图 DDL → 分批搬数据 → 行数 + 逐行校验和核对 → 同类型库直接创建过程/函数/触发器（跨类型库生成改造草稿）→ 输出脚本、类型映射、对象问题清单、迁移报告。
+
+**运行环境：.NET Framework 4.8。** Windows 10/11 自带；Windows 7 SP1 需安装 4.8 运行时。不支持 Windows XP。
 
 ![DBConvertDB 主界面](https://cdn.jsdelivr.net/gh/doyoulaikeme/DBConvertDB@main/docs/screenshot.png)
 
@@ -29,7 +31,7 @@
 
 驱动处理方式：
 
-- MySQL / PostgreSQL / Oracle / SQL Server / SQLite 的驱动已随程序打包，装好 .NET 5 运行时即可用。
+- MySQL / PostgreSQL / Oracle / SQL Server / SQLite 的驱动已随程序打包，Windows 10/11 自带 .NET Framework 4.8；Windows 7 SP1 需要先安装 4.8 运行时。
 - 达梦、金仓等厂商驱动不随包分发（授权原因），把 `DmProvider.dll` / `Kdbndp.dll` 及其依赖放到 **程序目录** 或 **程序目录下的 `providers` 子目录**，工具会自动找到；也可以在配置里显式指定 `providerAssembly` / `providerType`。
 
 先用这条命令确认驱动状态：
@@ -54,6 +56,7 @@ DBConvertDB
 ├─ assets                   # 应用图标
 ├─ docs                     # 文档与界面截图
 ├─ .github/workflows        # GitHub Actions 编译检查
+├─ Directory.Build.props    # net48 引用程序集与 SDK 兼容配置
 ├─ LICENSE                  # MIT
 ├─ CONTRIBUTING.md          # 贡献指南
 ├─ publish.ps1              # 一键发布到 dist
@@ -70,25 +73,25 @@ DBConvertDB
 git clone https://github.com/doyoulaikeme/DBConvertDB.git
 cd DBConvertDB
 
-# 0) 先编译（需要 .NET SDK 5.0）
+# 0) 先编译（需要 .NET SDK 5.0 或更高）
 dotnet build DBConvertDB.sln -c Debug
 
 # 1) 生成配置模板
-.\src\DbConvert.Cli\bin\Debug\net5.0\DbConvert.Cli.exe init --out mysql2dm.json --source-kind mysql --target-kind dm
+.\src\DbConvert.Cli\bin\Debug\net48\DbConvert.Cli.exe init --out mysql2dm.json --source-kind mysql --target-kind dm
 
 # 2) 改 json 里的连接信息，然后测试连接
-.\src\DbConvert.Cli\bin\Debug\net5.0\DbConvert.Cli.exe test --config mysql2dm.json
-.\src\DbConvert.Cli\bin\Debug\net5.0\DbConvert.Cli.exe test --config mysql2dm.json --side target
+.\src\DbConvert.Cli\bin\Debug\net48\DbConvert.Cli.exe test --config mysql2dm.json
+.\src\DbConvert.Cli\bin\Debug\net48\DbConvert.Cli.exe test --config mysql2dm.json --side target
 
 # 3) 先看结构：会生成建表脚本 + 类型映射 CSV + 报告，不碰目标库
-.\src\DbConvert.Cli\bin\Debug\net5.0\DbConvert.Cli.exe plan --config mysql2dm.json
+.\src\DbConvert.Cli\bin\Debug\net48\DbConvert.Cli.exe plan --config mysql2dm.json
 
 # 4) 真正迁移（建表 + 搬数 + 校验）
-.\src\DbConvert.Cli\bin\Debug\net5.0\DbConvert.Cli.exe migrate --config mysql2dm.json
+.\src\DbConvert.Cli\bin\Debug\net48\DbConvert.Cli.exe migrate --config mysql2dm.json
 
 # 5) 只做核对 / 迁移中断后续传
-.\src\DbConvert.Cli\bin\Debug\net5.0\DbConvert.Cli.exe verify  --config mysql2dm.json
-.\src\DbConvert.Cli\bin\Debug\net5.0\DbConvert.Cli.exe migrate --config mysql2dm.json --resume
+.\src\DbConvert.Cli\bin\Debug\net48\DbConvert.Cli.exe verify  --config mysql2dm.json
+.\src\DbConvert.Cli\bin\Debug\net48\DbConvert.Cli.exe migrate --config mysql2dm.json --resume
 ```
 
 常用开关：`--drop`（先删目标表）、`--truncate`（清空数据保留表）、`--only "patient,visit*"`、`--exclude "*_log"`、`--mode schema|data|verify`、`--verify-mode count|none`、`--batch 2000`、`--identity-mode sequence`、`--script-only`（只生成 SQL、不连目标库）、`--log-file run.log`、`--dry-run`。
@@ -118,7 +121,7 @@ python samples/make_sqlite.py
 mysql -uroot -p dbconvert_test < samples/demo_objects.sql
 
 # 跑一个 SQLite → SQLite 示例
-.\src\DbConvert.Cli\bin\Debug\net5.0\DbConvert.Cli.exe migrate --config samples/sqlite2sqlite.json
+.\src\DbConvert.Cli\bin\Debug\net48\DbConvert.Cli.exe migrate --config samples/sqlite2sqlite.json
 ```
 
 ---
@@ -126,7 +129,7 @@ mysql -uroot -p dbconvert_test < samples/demo_objects.sql
 ## 4. 图形界面
 
 ```powershell
-.\src\DbConvert.Gui\bin\Debug\net5.0-windows\DbConvert.Gui.exe
+.\src\DbConvert.Gui\bin\Debug\net48\DbConvert.Gui.exe
 ```
 
 界面流程：填源库和目标库 → `测试连接` → `读取源表结构`（列出表、行数、列数，可勾选）→ 右侧选选项 → 勾选 `只生成 SQL（不连目标库）` 时按钮变成 `生成 SQL`，只产出脚本；不勾选则 `开始迁移` 直连目标库执行 → `校验` → `打开输出目录`。
@@ -346,5 +349,6 @@ git add .
 git commit -m "feat: ..."
 git push origin feature/your-change
 ```
+
 
 

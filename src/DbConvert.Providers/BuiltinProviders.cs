@@ -1,4 +1,5 @@
 using System.Data.Common;
+using DbConvert;
 using Microsoft.Data.SqlClient;
 using Microsoft.Data.Sqlite;
 using MySqlConnector;
@@ -7,7 +8,7 @@ using Oracle.ManagedDataAccess.Client;
 
 namespace DbConvert.Providers
 {
-    /// <summary>把随程序一起发布的内置 ADO.NET 驱动注册到 DbProviderFactories，供 Core 反射式使用。</summary>
+    /// <summary>把随程序一起发布的内置 ADO.NET 驱动注册到 ProviderHost，供 Core 反射式使用。</summary>
     public static class BuiltinProviders
     {
         public static void Register()
@@ -28,25 +29,17 @@ namespace DbConvert.Providers
         {
             try
             {
-                DbProviderFactories.RegisterFactory(invariant, factory);
+                ProviderHost.RegisterFactory(invariant, factory);
             }
             catch
             {
-                // 已注册过就忽略
+                // 注册失败不阻塞启动，连接时会给出更明确的错误
             }
         }
 
         public static bool IsRegistered(string invariant)
         {
-            try
-            {
-                DbProviderFactories.GetFactory(invariant);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            return ProviderHost.IsFactoryRegistered(invariant);
         }
     }
 }

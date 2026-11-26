@@ -1,0 +1,12 @@
+<Project>
+
+  <!--
+    net48 的 WPF 临时工程不会继承 PackageReference 里的引用程序集路径，
+    这里统一指向 NuGet 包 Microsoft.NETFramework.ReferenceAssemblies.net48。
+  -->
+  <PropertyGroup Condition="'$(TargetFrameworkRootPath)' == ''">
+    <NuGetPackageRoot Condition="'$(NuGetPackageRoot)' == ''">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>
+    <TargetFrameworkRootPath>$(NuGetPackageRoot)microsoft.netframework.referenceassemblies.net48\1.0.3\build\</TargetFrameworkRootPath>
+  </PropertyGroup>
+
+</Project>
