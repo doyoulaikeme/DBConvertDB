@@ -18,6 +18,8 @@
 3. 尽量为改动补充可复现的示例配置或 SQL；跨库方言改动请说明测试过的数据库版本。
 4. 不要提交 `bin/obj/dist/output`、真实数据库文件、连接密码、证书或厂商授权驱动。
 
+提交前请确认目标框架仍是 `net48`，运行环境是 .NET Framework 4.8（Win7 SP1 / 10 / 11），构建建议使用 .NET SDK 8.0。
+
 ```powershell
 git checkout -b fix/your-change
 dotnet build DBConvertDB.sln -c Release

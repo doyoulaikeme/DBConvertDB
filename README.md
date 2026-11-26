@@ -73,7 +73,7 @@ DBConvertDB
 git clone https://github.com/doyoulaikeme/DBConvertDB.git
 cd DBConvertDB
 
-# 0) 先编译（需要 .NET SDK 5.0 或更高）
+# 0) 先编译（建议 .NET SDK 8.0；5.0 以上也可构建）
 dotnet build DBConvertDB.sln -c Debug
 
 # 1) 生成配置模板
@@ -326,13 +326,15 @@ dotnet build DBConvertDB.sln -c Release
 
 `dist\` 里会有 `DbConvert.Cli.exe`、`DbConvert.Gui.exe`、驱动 DLL、`providers\` 目录和样例配置。
 
+构建目标是 `net48`；运行程序只需要 .NET Framework 4.8，不需要安装 .NET 5 运行时。CI 使用 .NET SDK 8.0 编译。
+
 ---
 
 ## 12. 开源协议
 
 本项目使用 **MIT License**，详见 [LICENSE](LICENSE)。可以自由使用、修改、分发和商业使用；请保留版权与许可声明。
 
-第三方 NuGet 依赖（MySqlConnector、Npgsql、Microsoft.Data.SqlClient、Microsoft.Data.Sqlite、Oracle.ManagedDataAccess.Core）遵循各自的许可证；达梦 `DmProvider.dll`、金仓 `Kdbndp.dll` 等厂商驱动不随本项目分发，需要使用者自行获取并按厂商授权使用。
+第三方 NuGet 依赖（MySqlConnector、Npgsql、Microsoft.Data.SqlClient、Microsoft.Data.Sqlite、Oracle.ManagedDataAccess）遵循各自的许可证；达梦 `DmProvider.dll`、金仓 `Kdbndp.dll` 等厂商驱动不随本项目分发，需要使用者自行获取并按厂商授权使用。
 
 ## 13. 贡献
 
