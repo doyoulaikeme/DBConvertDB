@@ -1,0 +1,15 @@
+{
+  "source": { "kind": "sqlite", "database": "samples/from_mysql.db" },
+  "target": { "kind": "sqlite", "database": "samples/gen_roundtrip.db" },
+  "options": {
+    "mode": "both",
+    "dropExisting": true,
+    "batchSize": 100,
+    "verifyMode": "count",
+    "outDir": "samples/out-gen",
+    "identifierCase": "preserve"
+  },
+  "tables": []
+}
+
+

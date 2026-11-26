@@ -1,0 +1,16 @@
+{
+  "source": { "kind": "sqlite", "database": "samples/src.db" },
+  "target": { "kind": "sqlite", "database": "samples/dst.db", "schema": "main" },
+  "options": {
+    "mode": "both",
+    "dropExisting": true,
+    "batchSize": 50,
+    "verifyMode": "checksum",
+    "outDir": "samples/out",
+    "identifierCase": "preserve",
+    "overflowPolicy": "fail"
+  },
+  "tables": []
+}
+
+

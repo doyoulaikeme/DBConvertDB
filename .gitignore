@@ -1,0 +1,40 @@
+# Build output
+bin/
+obj/
+dist/
+output/
+
+# IDE / local state
+.vs/
+.idea/
+*.user
+*.suo
+*.cache
+*.log
+
+# Generated migration artifacts
+schema_*.sql
+issues_*.csv
+mapping_*.csv
+report_*.md
+objects_manual_*.sql
+samples/out*/
+dialog-trace.log
+ui-*.png
+
+# Local databases and test data
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Vendor/proprietary drivers — do not redistribute
+providers/
+DmProvider*.dll
+Kdbndp*.dll
+
+# Secrets
+.env
+*.pfx
+*.key
+secrets.*

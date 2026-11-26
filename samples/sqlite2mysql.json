@@ -1,0 +1,23 @@
+{
+  "source": { "kind": "sqlite", "database": "samples/src.db" },
+  "target": {
+    "kind": "mysql",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "database": "dbconvert_test",
+    "user": "root",
+    "password": "YOUR_PASSWORD"
+  },
+  "options": {
+    "mode": "both",
+    "dropExisting": true,
+    "batchSize": 100,
+    "verifyMode": "checksum",
+    "outDir": "samples/out-mysql",
+    "identifierCase": "preserve",
+    "overflowPolicy": "fail"
+  },
+  "tables": []
+}
+
+

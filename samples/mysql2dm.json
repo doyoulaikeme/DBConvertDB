@@ -1,0 +1,26 @@
+{
+  "source": {
+    "kind": "mysql",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "database": "dbconvert_test",
+    "user": "root",
+    "password": "YOUR_PASSWORD"
+  },
+  "target": {
+    "kind": "dm",
+    "host": "127.0.0.1",
+    "database": "TESTDB",
+    "user": "u",
+    "password": "YOUR_PASSWORD"
+  },
+  "options": {
+    "mode": "schema",
+    "verifyMode": "none",
+    "outDir": "samples/out-dm",
+    "identityMode": "auto"
+  },
+  "tables": []
+}
+
+
