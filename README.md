@@ -12,7 +12,7 @@
 
 核心能力：读源库结构 → 生成目标库建表/索引/注释/默认值/生成列/CHECK/外键/视图 DDL → 分批搬数据 → 行数 + 逐行校验和核对 → 同类型库直接创建过程/函数/触发器（跨类型库生成改造草稿）→ 输出脚本、类型映射、对象问题清单、迁移报告。
 
-![DBConvertDB 主界面](docs/screenshot.png)
+![DBConvertDB 主界面](https://cdn.jsdelivr.net/gh/doyoulaikeme/DBConvertDB@main/docs/screenshot.png)
 
 ---
 
@@ -67,7 +67,7 @@ DBConvertDB
 ## 3. 快速开始（命令行）
 
 ```powershell
-git clone https://github.com/<your-account>/DBConvertDB.git
+git clone https://github.com/doyoulaikeme/DBConvertDB.git
 cd DBConvertDB
 
 # 0) 先编译（需要 .NET SDK 5.0）
