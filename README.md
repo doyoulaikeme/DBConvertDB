@@ -18,6 +18,14 @@
 
 ---
 
+## 典型迁移场景
+
+- **MySQL → 达梦 DM / 金仓 KingbaseES**：表结构、数据、视图、过程/函数、触发器一次迁移；同类型库对象直接创建，跨类型对象生成改造草稿。
+- **Oracle → 金仓 / openGauss**：表、默认值、CHECK、外键、视图迁移，按目标语法改写函数和类型。
+- **SQL Server → PostgreSQL / MySQL**：默认值、计算列、CHECK、外键、视图迁移，保留行数与校验和核对。
+- **SQLite → MySQL / PostgreSQL**：离线库、现场临时库、历史数据搬迁，适合先迁结构再搬数。
+- **医院、政务、内网环境**：不依赖外网，GUI 和 CLI 共用同一引擎，可先“只生成 SQL”再人工审核上线。
+
 ## 1. 支持的库
 
 | 类别 | kind 取值 | 说明 |
@@ -329,6 +337,8 @@ dotnet build DBConvertDB.sln -c Release
 
 构建目标是 `net48`；运行程序只需要 .NET Framework 4.8，不需要安装 .NET 5 运行时。CI 使用 .NET SDK 8.0 编译。
 
+发布说明见 [docs/RELEASE_NOTES_v1.0.0.md](docs/RELEASE_NOTES_v1.0.0.md)。
+
 ---
 
 ## 12. 开源协议
@@ -352,6 +362,13 @@ git add .
 git commit -m "feat: ..."
 git push origin feature/your-change
 ```
+
+## English
+
+DBConvertDB is a .NET Framework 4.8 database migration tool for MySQL, PostgreSQL, Oracle, SQL Server, SQLite, Dameng DM, KingbaseES, openGauss, OceanBase, TiDB, GBase 8a and HighGo. It migrates table schemas, data, views, routines and triggers, with row-count and checksum verification. It supports both direct migration and SQL-script-only mode, and ships with a WPF GUI and a CLI.
+
+Typical use cases include MySQL to Dameng/KingbaseES, Oracle to KingbaseES/openGauss, SQL Server to PostgreSQL/MySQL, and SQLite offline database migration.
+
 
 
 
